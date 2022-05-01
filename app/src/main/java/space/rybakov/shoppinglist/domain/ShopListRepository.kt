@@ -3,7 +3,7 @@ package space.rybakov.shoppinglist.domain
 interface ShopListRepository {
     fun addShopItem(shopItem: ShopItem)
 
-    fun deleteShopItem(shopItemId: Int)
+    fun deleteShopItem(shopItem: ShopItem)
 
     fun editShopItem (shopItem: ShopItem)
 
