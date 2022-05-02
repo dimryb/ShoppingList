@@ -10,7 +10,7 @@
     android:layout_marginBottom="4dp"
     app:cardCornerRadius = "4dp"
     app:cardElevation = "1dp"
-    app:cardUserCompatPadding = "true">
+    app:cardUseCompatPadding = "true">
 
 
     <LinearLayout
