@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import space.rybakov.shoppinglist.R
+import space.rybakov.shoppinglist.domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +35,11 @@ class MainActivity : AppCompatActivity() {
                 ShopListAdaptor.VIEW_TYPE_DISABLED,
                 ShopListAdaptor.MAX_PULL_SIZE
             )
+        }
+        shopListAdaptor.onShopItemLongClickListener = object : ShopListAdaptor.OnShopItemLongClickListener{
+            override fun onShopItemLongClick(shopItem: ShopItem) {
+                viewModel.changeEnableState(shopItem)
+            }
         }
     }
 }
