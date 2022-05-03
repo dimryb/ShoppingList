@@ -36,10 +36,8 @@ class MainActivity : AppCompatActivity() {
                 ShopListAdaptor.MAX_PULL_SIZE
             )
         }
-        shopListAdaptor.onShopItemLongClickListener = object : ShopListAdaptor.OnShopItemLongClickListener{
-            override fun onShopItemLongClick(shopItem: ShopItem) {
-                viewModel.changeEnableState(shopItem)
-            }
+        shopListAdaptor.onShopItemLongClickListener = {
+            viewModel.changeEnableState(it)
         }
     }
 }
