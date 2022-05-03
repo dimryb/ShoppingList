@@ -1,5 +1,6 @@
 package space.rybakov.shoppinglist.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,5 +24,9 @@ class MainViewModel : ViewModel() {
     fun changeEnableState(shopItem: ShopItem) {
         val newItem = shopItem.copy(enabled = !shopItem.enabled)
         editShopItemUseCase.editShopItem(newItem)
+    }
+
+    fun editShopItem(shopItem: ShopItem) {
+        Log.d("MainViewModel", "editShopItem $shopItem")
     }
 }
