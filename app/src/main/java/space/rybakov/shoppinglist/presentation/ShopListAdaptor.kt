@@ -44,6 +44,7 @@ class ShopListAdaptor : RecyclerView.Adapter<ShopListAdaptor.ShopItemViewHolder>
         viewHolder.view.setOnClickListener {
             onShopItemClickListener?.invoke(shopItem)
         }
+        viewHolder.view
         viewHolder.tvName.text = shopItem.name
         viewHolder.tvCount.text = shopItem.count.toString()
     }
