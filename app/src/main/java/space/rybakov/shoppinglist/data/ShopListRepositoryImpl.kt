@@ -1,11 +1,9 @@
 package space.rybakov.shoppinglist.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import space.rybakov.shoppinglist.domain.ShopItem
 import space.rybakov.shoppinglist.domain.ShopListRepository
-import java.lang.RuntimeException
 import kotlin.random.Random
 
 object ShopListRepositoryImpl : ShopListRepository {

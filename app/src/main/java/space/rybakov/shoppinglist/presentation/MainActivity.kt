@@ -1,13 +1,12 @@
 package space.rybakov.shoppinglist.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import space.rybakov.shoppinglist.R
-import space.rybakov.shoppinglist.domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 

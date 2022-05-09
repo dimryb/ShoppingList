@@ -1,11 +1,12 @@
 package space.rybakov.shoppinglist.presentation
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import space.rybakov.shoppinglist.data.ShopListRepositoryImpl
-import space.rybakov.shoppinglist.domain.*
+import space.rybakov.shoppinglist.domain.DeleteShopItemUseCase
+import space.rybakov.shoppinglist.domain.EditShopItemUseCase
+import space.rybakov.shoppinglist.domain.GetShopListUseCase
+import space.rybakov.shoppinglist.domain.ShopItem
 
 class MainViewModel : ViewModel() {
 
