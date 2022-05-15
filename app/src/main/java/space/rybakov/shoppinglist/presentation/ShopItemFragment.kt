@@ -19,7 +19,7 @@ import space.rybakov.shoppinglist.domain.ShopItem
 class ShopItemFragment(
     private val screenMode: String = MODE_UNKNOWN,
     private val shopItemId: Int = ShopItem.UNDEFINED_ID
-): Fragment() {
+) : Fragment() {
     private lateinit var viewModel: ShopItemViewModel
 
     private lateinit var tilName: TextInputLayout
@@ -46,36 +46,38 @@ class ShopItemFragment(
         observeViewModel()
     }
 
-    private fun observeViewModel(){
-        viewModel.errorInputCount.observe(viewLifecycleOwner){
-            val message = if(it){
+    private fun observeViewModel() {
+        viewModel.errorInputCount.observe(viewLifecycleOwner) {
+            val message = if (it) {
                 getString(R.string.error_input_count)
-            }else{
+            } else {
                 null
             }
             tilCount.error = message
         }
-        viewModel.errorInputName.observe(viewLifecycleOwner){
-            val message = if(it){
+        viewModel.errorInputName.observe(viewLifecycleOwner) {
+            val message = if (it) {
                 getString(R.string.error_input_name)
-            }else{
+            } else {
                 null
             }
             tilName.error = message
         }
-        viewModel.shouldCloseScreen.observe(viewLifecycleOwner){
-            //finish()
+        viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
+            activity?.onBackPressed()
+
+            //requireActivity().onBackPressed()
         }
     }
 
-    private fun launchRightMode(){
-        when(screenMode){
+    private fun launchRightMode() {
+        when (screenMode) {
             MODE_EDIT -> launchEditMode()
             MODE_ADD -> launchAddMode()
         }
     }
 
-    private fun addTextChangeListener(){
+    private fun addTextChangeListener() {
         etName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -87,7 +89,7 @@ class ShopItemFragment(
             override fun afterTextChanged(p0: Editable?) {
             }
         })
-        etCount.addTextChangedListener(object : TextWatcher{
+        etCount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -100,9 +102,9 @@ class ShopItemFragment(
         })
     }
 
-    private fun launchEditMode(){
+    private fun launchEditMode() {
         viewModel.getStopItem(shopItemId)
-        viewModel.shopItem.observe(viewLifecycleOwner){
+        viewModel.shopItem.observe(viewLifecycleOwner) {
             etName.setText(it.name)
             etCount.setText(it.count.toString())
         }
@@ -111,17 +113,17 @@ class ShopItemFragment(
         }
     }
 
-    private fun launchAddMode(){
+    private fun launchAddMode() {
         buttonSave.setOnClickListener {
             viewModel.addShopItem(etName.text?.toString(), etCount.text?.toString())
         }
     }
 
-    private fun  parseParams() {
-        if (screenMode != MODE_EDIT && screenMode != MODE_ADD){
+    private fun parseParams() {
+        if (screenMode != MODE_EDIT && screenMode != MODE_ADD) {
             throw RuntimeException("Param screen mode is absent")
         }
-        if (screenMode == MODE_EDIT && shopItemId == ShopItem.UNDEFINED_ID){
+        if (screenMode == MODE_EDIT && shopItemId == ShopItem.UNDEFINED_ID) {
             throw RuntimeException("Param shop item id is absent")
         }
     }
@@ -141,6 +143,15 @@ class ShopItemFragment(
         private const val MODE_EDIT = "mode_edit"
         private const val MODE_ADD = "mode_add"
         private const val MODE_UNKNOWN = ""
+
+        fun newInstanceAddItem(): ShopItemFragment {
+            return ShopItemFragment(MODE_ADD)
+        }
+
+        fun newInstanceEditItem(stopItemId: Int): ShopItemFragment {
+            return ShopItemFragment(MODE_EDIT, stopItemId)
+        }
+
 
         fun newIntentAddItem(context: Context): Intent {
             val intent = Intent(context, ShopItemActivity::class.java)
