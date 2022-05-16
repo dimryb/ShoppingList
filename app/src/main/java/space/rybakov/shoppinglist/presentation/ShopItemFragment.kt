@@ -30,6 +30,7 @@ class ShopItemFragment() : Fragment() {
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
     override fun onAttach(context: Context) {
+        Log.d("FragmentLifeCycle", "1. onAttach принимает контекст прицепленой Activity")
         super.onAttach(context)
         if (context is OnEditingFinishedListener){
             onEditingFinishedListener = context
@@ -39,6 +40,7 @@ class ShopItemFragment() : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("FragmentLifeCycle", "2. onCreate можно получить аргументы для восстановления")
         super.onCreate(savedInstanceState)
         parseParams()
     }
@@ -48,16 +50,53 @@ class ShopItemFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("FragmentLifeCycle", "3. onCreateView создаем вью из макета")
         return inflater.inflate(R.layout.fragment_shop_item, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("FragmentLifeCycle", "4. onViewCreated вью создано можно с ним работать")
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews(view)
         addTextChangeListener()
         launchRightMode()
         observeViewModel()
+    }
+
+    override fun onStart() {
+        Log.d("FragmentLifeCycle", "5. onStart видимо но еще не в фокусе")
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Log.d("FragmentLifeCycle", "6. onResume видимо и в фокусе")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.d("FragmentLifeCycle", "7. onPause еще видимо но уже не в фокусе")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d("FragmentLifeCycle", "8. onStop не видимо но не уничтожено")
+        super.onStop()
+    }
+
+    override fun onDestroyView() {
+        Log.d("FragmentLifeCycle", "9. onDestroyView уничтожено вью связанное с фрагментом")
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        Log.d("FragmentLifeCycle", "10. onDestroy уничтожен")
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        Log.d("FragmentLifeCycle", "11. onDetach откреплен от активити")
+        super.onDetach()
     }
 
     private fun observeViewModel() {
