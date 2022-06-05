@@ -42,13 +42,11 @@ class ShopListAdaptor :
             onShopItemClickListener?.invoke(shopItem)
         }
         when (binding){
-            is ItemShopDisabledBinding -> {
-                binding.tvName.text = shopItem.name
-                binding.tvCount.text = shopItem.count.toString()
-            }
             is ItemShopEnabledBinding -> {
-                binding.tvName.text = shopItem.name
-                binding.tvCount.text = shopItem.count.toString()
+                binding.shopItem = shopItem
+            }
+            is ItemShopDisabledBinding -> {
+                binding.shopItem = shopItem
             }
         }
     }
