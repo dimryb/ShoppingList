@@ -1,17 +1,17 @@
 package space.rybakov.shoppinglist.presentation
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import space.rybakov.shoppinglist.data.ShopListRepositoryImpl
 import space.rybakov.shoppinglist.domain.AddShopItemUseCase
 import space.rybakov.shoppinglist.domain.EditShopItemUseCase
 import space.rybakov.shoppinglist.domain.GetShopItemUseCase
 import space.rybakov.shoppinglist.domain.ShopItem
-import java.lang.Exception
 
-class ShopItemViewModel : ViewModel() {
-    private val repository = ShopListRepositoryImpl
+class ShopItemViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = ShopListRepositoryImpl(application)
 
     private val getShopItemUseCase = GetShopItemUseCase(repository)
     private val addShopItemUseCase = AddShopItemUseCase(repository)
