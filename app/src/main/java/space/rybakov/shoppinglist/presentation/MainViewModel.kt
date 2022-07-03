@@ -1,27 +1,20 @@
 package space.rybakov.shoppinglist.presentation
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import space.rybakov.shoppinglist.data.ShopListRepositoryImpl
 import space.rybakov.shoppinglist.domain.DeleteShopItemUseCase
 import space.rybakov.shoppinglist.domain.EditShopItemUseCase
 import space.rybakov.shoppinglist.domain.GetShopListUseCase
 import space.rybakov.shoppinglist.domain.ShopItem
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = ShopListRepositoryImpl(application)
-
-    private val getShopListUseCase = GetShopListUseCase(repository)
-    private val deleteShopItemUseCase = DeleteShopItemUseCase(repository)
-    private val editShopItemUseCase = EditShopItemUseCase(repository)
+class MainViewModel @Inject constructor(
+    private val getShopListUseCase: GetShopListUseCase,
+    private val deleteShopItemUseCase: DeleteShopItemUseCase,
+    private val editShopItemUseCase: EditShopItemUseCase,
+) : ViewModel() {
 
     val shopList = getShopListUseCase.getShopList()
 
