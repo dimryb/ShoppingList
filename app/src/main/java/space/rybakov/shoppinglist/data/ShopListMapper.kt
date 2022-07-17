@@ -1,8 +1,9 @@
 package space.rybakov.shoppinglist.data
 
 import space.rybakov.shoppinglist.domain.ShopItem
+import javax.inject.Inject
 
-class ShopListMapper {
+class ShopListMapper @Inject constructor() {
 
     fun mapEntityToDbModel(shopItem: ShopItem) = ShopItemDbModel(
         id = shopItem.id,

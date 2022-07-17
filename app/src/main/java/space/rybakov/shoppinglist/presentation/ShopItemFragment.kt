@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import space.rybakov.shoppinglist.R
 import space.rybakov.shoppinglist.databinding.FragmentShopItemBinding
 import space.rybakov.shoppinglist.domain.ShopItem
+import javax.inject.Inject
 
 class ShopItemFragment() : Fragment() {
 
@@ -25,11 +26,20 @@ class ShopItemFragment() : Fragment() {
     private var screenMode: String = MODE_UNKNOWN
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private val viewModel: ShopItemViewModel by lazy {
-        ViewModelProvider(this)[ShopItemViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[ShopItemViewModel::class.java]
+    }
+
+    private val component by lazy {
+        (requireActivity().application as ShopApplication).component
     }
 
     override fun onAttach(context: Context) {
+        component.inject(this)
+
         Log.d("FragmentLifeCycle", "1. onAttach принимает контекст прицепленой Activity")
         super.onAttach(context)
         if (context is OnEditingFinishedListener){

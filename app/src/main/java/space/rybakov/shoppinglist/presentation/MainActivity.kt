@@ -12,22 +12,29 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import space.rybakov.shoppinglist.R
 import space.rybakov.shoppinglist.databinding.ActivityMainBinding
 import space.rybakov.shoppinglist.databinding.FragmentShopItemBinding
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdaptor: ShopListAdaptor
-
     private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as ShopApplication).component
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        component.inject(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupRecyclerView()
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.shopList.observe(this) {
             shopListAdaptor.submitList(it)
         }
