@@ -1,6 +1,8 @@
 package space.rybakov.shoppinglist.presentation
 
+import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +16,7 @@ import space.rybakov.shoppinglist.R
 import space.rybakov.shoppinglist.databinding.FragmentShopItemBinding
 import space.rybakov.shoppinglist.domain.ShopItem
 import javax.inject.Inject
+import kotlin.concurrent.thread
 
 class ShopItemFragment() : Fragment() {
 
@@ -42,7 +45,7 @@ class ShopItemFragment() : Fragment() {
 
         Log.d("FragmentLifeCycle", "1. onAttach принимает контекст прицепленой Activity")
         super.onAttach(context)
-        if (context is OnEditingFinishedListener){
+        if (context is OnEditingFinishedListener) {
             onEditingFinishedListener = context
         } else {
             throw RuntimeException("Activity must implement OnEditingFinishedListener")
@@ -161,7 +164,21 @@ class ShopItemFragment() : Fragment() {
 
     private fun launchAddMode() {
         binding.saveButton.setOnClickListener {
-            viewModel.addShopItem(binding.etName.text?.toString(), binding.etCount.text?.toString())
+//            viewModel.addShopItem(
+//                binding.etName.text?.toString(),
+//                binding.etCount.text?.toString()
+//            )
+            thread {
+                context?.contentResolver?.insert(
+                    Uri.parse("content://space.rybakov.shoppinglist/shop_items"),
+                    ContentValues().apply {
+                        put("id", 0)
+                        put("name", binding.etName.text?.toString())
+                        put("count", binding.etCount.text?.toString()?.toInt())
+                        put("enabled", true)
+                    }
+                )
+            }
         }
     }
 
